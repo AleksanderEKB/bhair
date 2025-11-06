@@ -1,6 +1,7 @@
 // front/src/features/header/components/Header.tsx
 import React from "react";
 import '../styles.scss';
+import HamburgerMenu from '../../nav/HamburgerMenu';
 
 const Header: React.FC = () => {
     return (
@@ -17,6 +18,8 @@ const Header: React.FC = () => {
                         className="header_image" 
                     />
                 </picture>
+                {/* Размещаем кнопку внутри header, чтобы в закрытом состоянии она была в правом нижнем углу */}
+                <HamburgerMenu />
             </div>
         </header>
     );
