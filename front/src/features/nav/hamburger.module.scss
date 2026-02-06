@@ -1,21 +1,20 @@
-// front/src/features/nav/hamburger.module.scss
-@use '../shared/styles/mixins/mixins.scss' as mixins;
+@use '../shared/styles/variables.scss' as v;
 
 $icon-size: 2.5rem;
 $line-length: 1rem;
 $line-thickness: .15rem;
 $line-radius: .15rem;
 
-
 .hamburgerMenu {
-  position: relative; /* контейнер для кнопки */
+  /* контейнер не нужен как якорь — кнопку фиксируем сами */
+  position: static;
 }
 
-/* Базовый стиль кнопки (без позиции) */
+/* Базовый стиль кнопки */
 .hamburgerIcon {
-  z-index: 1001;
-  width: $icon-size;   /* больше размер */
-  height: $icon-size;  /* больше размер */
+  z-index: 1100; /* выше header (1000) и меню */
+  width: $icon-size;
+  height: $icon-size;
   padding: 0;
   border: 0;
   background: transparent;
@@ -31,9 +30,9 @@ $line-radius: .15rem;
     gap: 5px;
     position: absolute;
     left: 50%;
-    width: $line-length;     /* длиннее */
-    height: $line-thickness;     /* толще (пожирнее) */
-    background: #fff; /* белый цвет линий */
+    width: $line-length;
+    height: $line-thickness;
+    background: v.$main-text;
     border-radius: $line-radius;
     transform-origin: center;
     transition:
@@ -43,57 +42,38 @@ $line-radius: .15rem;
       background-color 0.2s ease;
   }
 
-  /* Располагаем линии относительно увеличенной кнопки */
   .line:nth-child(1) { top: 22px; transform: translateX(-50%); }
   .line:nth-child(2) { top: 28px; transform: translateX(-50%); }
   .line:nth-child(3) { top: 34px; transform: translateX(-50%); }
 
   @media (prefers-reduced-motion: reduce) {
-    .line {
-      transition: none;
-    }
+    .line { transition: none; }
   }
 }
 
-/* Когда меню закрыто — кнопка внутри header (правый нижний угол) */
-.iconInHeader {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-}
-
-/* Когда меню открыто — фиксируем кнопку в правом верхнем углу окна */
+/* ВСЕГДА фиксируем кнопку в правом верхнем углу окна */
+.iconInHeader,
 .iconFixedOpen {
   position: fixed;
-  top: 12px;
-  right: 12px;
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  right: calc(12px + env(safe-area-inset-right, 0px));
 }
 
 /* Состояние открыто — превращаем в крестик */
 .openIcon {
-  .line:nth-child(1) {
-    top: 28px;
-    transform: translateX(-50%) rotate(45deg);
-  }
-  .line:nth-child(2) {
-    opacity: 0;
-    transform: translateX(-50%) scaleX(0.2);
-  }
-  .line:nth-child(3) {
-    top: 28px;
-    transform: translateX(-50%) rotate(-45deg);
-  }
+  .line:nth-child(1) { top: 28px; transform: translateX(-50%) rotate(45deg); }
+  .line:nth-child(2) { opacity: 0; transform: translateX(-50%) scaleX(0.2); }
+  .line:nth-child(3) { top: 28px; transform: translateX(-50%) rotate(-45deg); }
 }
 
+/* Панель меню (без изменений логики, под палитру) */
 .menuContent {
   position: fixed;
   top: 0;
   right: 0;
   width: 0;
   height: 100%;
-  border-left: 1px solid #e5e5e5;
   overflow: hidden;
-  transition: width 0.3s ease, background-color 0.2s ease;
   z-index: 1000;
 
   display: flex;
@@ -102,28 +82,44 @@ $line-radius: .15rem;
   align-items: stretch;
   padding-top: 64px;
 
+  background: rgba(7, 11, 20, 0.66);
+  backdrop-filter: blur(10px);
+  border-left: 1px solid v.$border;
+  transition: width .3s ease, background-color .2s ease;
+
   a {
-    padding: .75rem 1rem;
+    display: block;
+    width: calc(100% - 2rem);
+    margin: 0 .75rem;
+    padding: .875rem 1rem;
+    border-radius: .625rem;
+    border: 1px solid v.$border;
+    background: v.$surface-0;
+    color: v.$main-text;
     text-decoration: none;
-    color: #222;
-    transition: color 0.2s ease, transform 0.2s ease;
+    transition:
+      background-color .2s ease,
+      border-color .2s ease,
+      transform .2s ease,
+      color .2s ease;
 
     &:hover {
-      transform: translateX(.7rem);
+      background: v.$surface-1;
+      border-color: v.$border-strong;
+      transform: translateX(.2rem);
+    }
+
+    &:focus-visible {
+      outline: 3px solid v.$accent;
+      outline-offset: 2px;
     }
   }
 }
 
-.open {
-  width: 16.25rem;
-  background: mixins.$main-bg;
-
-  a {
-    color: #fff;
-  }
-}
+.open { width: 16.25rem; }
 
 .activeLink {
   font-weight: 700;
-  text-decoration: underline;
+  border-color: v.$border-strong;
+  background: v.$surface-2;
 }

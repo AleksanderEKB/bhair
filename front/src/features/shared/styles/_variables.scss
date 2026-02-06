@@ -1,10 +1,39 @@
-// front/src/features/shared/styles/_variables.scss
+/* НОВАЯ ПАЛИТРА — заменяет старые цвета полностью */
+$mainFont: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
-@use './fonts/fonts';
+/* Базовая тёмная гамма (глубокий сине‑графит) */
+$bg-0: #83878a;  /* самый тёмный слой */
+$bg-1: #7b7f80;
+$bg-2: #83878a;
 
-$main-bg: #215e5e;
-$color-1: #fff;
-$color-2: #f44949;
+/* Градиент общего фона (как на примере: тёмный, с мягким вертикальным переходом) */
+$main-bg: linear-gradient(
+  180deg,
+  $bg-2 0%,
+  $bg-1 42%,
+  $bg-0 80%
+);
 
-$mainFont: font-main;
+/* Текст/контраст */
+$main-text: #e9edf1;
+$muted-text: #dcdcdc;
 
+/* Акцент/фокус */
+$accent: #6bd3ff;
+$accent-strong: #8ae7ff;
+
+/* Поверхности и границы (тёмные полупрозрачные стеклянные слои) */
+$surface-0: rgba(255, 255, 255, 0.06);  /* фон карточек */
+$surface-1: rgba(255, 255, 255, 0.10);  /* hover карточек */
+$surface-2: rgba(255, 255, 255, 0.14);  /* активные/выделенные */
+$border: rgba(255, 255, 255, 0.14);
+$border-strong: rgba(255, 255, 255, 0.22);
+
+/* Шадоу */
+$shadow-1: 0 8px 24px rgba(0, 0, 0, 0.24);
+$shadow-2: 0 10px 28px rgba(0, 0, 0, 0.28);
+
+/* Состояния */
+$error: #ff6b6b;
+$warning: #ffd166;
+$success: #2dd4bf;

@@ -3,22 +3,26 @@ import React from "react";
 import '../styles.scss';
 import HamburgerMenu from '../../nav/HamburgerMenu';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    sticky?: boolean; // по умолчанию true (как было)
+}
+
+const Header: React.FC<HeaderProps> = ({ sticky = true }) => {
     return (
-        <header className="header_root">
+        <header className={`header_root ${!sticky ? 'notSticky' : ''}`}>
             <div className="header_image_container">
                 <picture>
                     <source 
                         media="(max-width: 699px)" 
-                        srcSet="https://bhair.online/media/default/header_mobile.png" 
+                        srcSet="https://bhair.pro/media/default/header_mobile.jpeg" 
                     />
                     <img 
-                        src="https://bhair.online/media/default/header_desktop.png" 
+                        src="https://bhair.pro/media/default/header_desktop.jpeg" 
                         alt="Header" 
                         className="header_image" 
                     />
                 </picture>
-                {/* Размещаем кнопку внутри header, чтобы в закрытом состоянии она была в правом нижнем углу */}
+                {/* Кнопка гамбургера внутри header */}
                 <HamburgerMenu />
             </div>
         </header>

@@ -1,0 +1,46 @@
+/* front/src/shared/components/reveal.module.scss */
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translateY(var(--y, 18px)) scale(var(--s, .96));
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(calc(var(--y, 18px) * -0.1)) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.reveal {
+  /* стартовое состояние — скрыто и слегка смещено/уменьшено */
+  opacity: 0;
+  transform: translateY(var(--y, 18px)) scale(var(--s, .96));
+  will-change: transform, opacity;
+
+  /* чтобы не ломать поток и клики до анимации */
+  transition: opacity .2s ease-out;
+  pointer-events: auto;
+}
+
+/* пресеты интенсивности */
+.soft  { --y: 10px; --s: .985; }
+.base  { --y: 18px; --s: .96;  }
+.strong{ --y: 28px; --s: .9;   }
+
+/* активное состояние */
+.isVisible {
+  animation: popIn .6s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+/* уважение reduce-motion — просто показать */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+}

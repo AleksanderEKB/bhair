@@ -5,7 +5,8 @@ from .models import Service
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('title', 'price', 'is_active', 'updated_at')
+    list_display = ('id', 'title', 'price', 'is_active', 'sort_order', 'updated_at')
     list_filter = ('is_active',)
     search_fields = ('title', 'description')
     prepopulated_fields = {"slug": ("title",)}
+    list_editable = ('sort_order',)

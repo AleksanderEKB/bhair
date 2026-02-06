@@ -5,7 +5,13 @@ import { useAppSelector } from '../../app/hook';
 import { selectIsAuth, selectUser } from '../auth/model/selectors';
 import styles from './hamburger.module.scss';
 
-const HamburgerMenu: React.FC = () => {
+type Props = {
+  // Если true — кнопка меню всегда фиксирована в правом верхнем углу (даже когда меню закрыто).
+  // Нужно для страниц без Header.
+  fixedWhenClosed?: boolean;
+};
+
+const HamburgerMenu: React.FC<Props> = ({ fixedWhenClosed = false }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isAuthenticated = useAppSelector(selectIsAuth);
   const user = useAppSelector(selectUser);
@@ -34,6 +40,9 @@ const HamburgerMenu: React.FC = () => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isOpen]);
 
+  const buttonPositionClass =
+    isOpen || fixedWhenClosed ? styles.iconFixedOpen : styles.iconInHeader;
+
   return (
     <div className={styles.hamburgerMenu} ref={menuRef}>
       <button
@@ -42,7 +51,7 @@ const HamburgerMenu: React.FC = () => {
         aria-expanded={isOpen}
         className={[
           styles.hamburgerIcon,
-          isOpen ? styles.iconFixedOpen : styles.iconInHeader,
+          buttonPositionClass,
           isOpen ? styles.openIcon : ''
         ].join(' ')}
         onClick={toggleMenu}

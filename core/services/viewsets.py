@@ -20,7 +20,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['is_active']
     search_fields = ['title', 'description']
-    ordering_fields = ['title', 'price', 'created_at']
+    ordering_fields = ['sort_order', 'title', 'price', 'created_at']  # добавили sort_order
     lookup_field = 'slug'
 
     def get_queryset(self):

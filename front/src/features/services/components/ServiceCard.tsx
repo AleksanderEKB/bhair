@@ -9,9 +9,20 @@ interface Props {
 }
 
 const ServiceCard: React.FC<Props> = ({ service }) => {
+  const handleClick = () => {
+    // запоминаем позицию скролла перед переходом на детальную
+    sessionStorage.setItem('services_scroll', String(window.scrollY));
+    sessionStorage.setItem('services_restore', '1');
+  };
+
   return (
-    <div className={styles.card}>
-      <Link to={`/services/${service.slug}`} className={styles.imageWrap} aria-label={service.title}>
+    <Link
+      to={`/services/${service.slug}`}
+      className={styles.card}
+      aria-label={service.title}
+      onClick={handleClick}
+    >
+      <div className={styles.imageWrap}>
         {service.image_url ? (
           <img
             src={service.image_url}
@@ -20,14 +31,11 @@ const ServiceCard: React.FC<Props> = ({ service }) => {
             loading="lazy"
             decoding="async"
           />
-        ) : (
-          <div className={styles.imagePlaceholder} />
-        )}
-      </Link>
+        ) : null}
+      </div>
+
       <div className={styles.content}>
-        <Link to={`/services/${service.slug}`} className={styles.title}>
-          {service.title}
-        </Link>
+        <div className={styles.title}>{service.title}</div>
         {service.short_description && (
           <p className={styles.desc}>{service.short_description}</p>
         )}
@@ -40,7 +48,7 @@ const ServiceCard: React.FC<Props> = ({ service }) => {
           })}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

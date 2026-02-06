@@ -26,7 +26,7 @@ class PasswordResetRequestSerializer(serializers.Serializer):
 
         reset_link = f"{settings.MY_HOST}/reset-password/{user.password_reset_token}/"
         send_mail(
-            subject='Сброс пароля на bhair.online',
+            subject='Сброс пароля на bhair.pro',
             message=(
                 "Здравствуйте!\n\nВы запросили восстановление пароля.\n"
                 f"Перейдите по ссылке, чтобы установить новый пароль:\n{reset_link}\n\n"

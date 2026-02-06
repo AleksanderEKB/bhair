@@ -10,6 +10,7 @@ export interface Service {
   is_active?: boolean;
   created_at?: string;
   updated_at?: string;
+  sort_order?: number;
 }
 
 export interface ServicesState {

@@ -9,6 +9,7 @@ import { hydrateFromStorage } from "./features/auth/model/authSlice";
 import "./features/shared/styles/global.scss";
 import AppLayout from "./layouts/AppLayout";
 import AuthLayout from "./layouts/AuthLayout";
+import NoHeaderLayout from "./layouts/NoHeaderLayout";
 
 const Home = React.lazy(() =>
   import(/* webpackChunkName: "home", webpackPrefetch: true */ "./features/Home/Home")
@@ -56,30 +57,31 @@ const Main: React.FC = () => {
 
   return (
     <Routes>
-      {/* Роуты с Header */}
+      {/* Роуты с Header - статичный */}
       <Route element={<AppLayout />}>
         <Route path="/" element={<Home />} />
-
-        {/* NEW: услуги */}
         <Route path="/services" element={<ServicesListPage />} />
-        <Route path="/services/:slug" element={<ServiceDetailPage />} />
       </Route>
 
-      {/* Роуты без Header */}
+      {/* Роуты Header - не статичный */}
       <Route element={<AuthLayout />}>
         <Route path="/login" element={<AuthPage />} />
         <Route path="/register" element={<AuthPage />} />
         <Route path="/verify-email/:token" element={<EmailVerifyPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+        <Route path="/services/:slug" element={<ServiceDetailPage />} />
+      </Route>
 
-        <Route
-          path="/profile"
-          element={
-            <PrivateRoute>
-              <ProfilePage />
-            </PrivateRoute>
-          }
-        />
+      {/* Layout без Header */}
+      <Route element={<NoHeaderLayout />}>
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
       </Route>
     </Routes>
   );

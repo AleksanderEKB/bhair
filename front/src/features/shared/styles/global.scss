@@ -1,22 +1,35 @@
-// front/src/features/shared/styles/global.scss
 @use './variables';
 
 /* Сброс */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* Общие стили для body */
+html, body, #root { height: 100%; }
+
 body {
-    background: variables.$main-bg;
-    overflow-y: scroll; /* вертикальная прокрутка */
-    overflow-x: hidden; /* отключаем горизонтальную */
-    scrollbar-width: none; /* Firefox */
-    font-family: variables.$mainFont;
+  background: variables.$main-bg;       /* общий фон как в примере */
+  color: variables.$main-text;          /* общий цвет текста */
+  font-family: variables.$mainFont;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+body::-webkit-scrollbar { display: none; }
+
+/* Ссылки и фокус */
+a { color: variables.$main-text; text-decoration: none; }
+a:focus-visible, button:focus-visible {
+  outline: 3px solid variables.$accent;
+  outline-offset: 2px;
 }
 
-body::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
+/* Универсальная поверхность для тёмных блоков */
+.surface {
+  background: variables.$surface-0;
+  border: 1px solid variables.$border;
+  border-radius: .75rem;
+  box-shadow: variables.$shadow-1;
+  backdrop-filter: blur(6px);
 }

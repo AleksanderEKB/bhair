@@ -1,12 +1,13 @@
+// front/src/layouts/AuthLayout.tsx
 import React from "react";
 import { Outlet } from "react-router-dom";
-import HamburgerMenu from "../features/nav/HamburgerMenu";
+import Header from "../features/header/components/Header";
 
-// На страницах авторизации/регистрации хедер скрыт, гамбургер оставлен как у тебя.
+// На этих страницах теперь тоже есть Header, но он не sticky.
 const AuthLayout: React.FC = () => {
   return (
     <>
-      <HamburgerMenu />
+      <Header sticky={false} />
       <Outlet />
     </>
   );

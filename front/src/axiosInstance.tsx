@@ -5,7 +5,7 @@ import { toast, Id } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 import { pickMessageFromData } from './features/shared/utils/httpError';
 
-const API_BASE_URL: string = process.env.REACT_APP_API_URL || 'https://bhair.online';
+const API_BASE_URL: string = process.env.REACT_APP_API_URL || 'https://bhair.pro';
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,

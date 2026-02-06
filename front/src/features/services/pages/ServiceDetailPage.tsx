@@ -1,6 +1,6 @@
 // front/src/features/services/pages/ServiceDetailPage.tsx
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../app/hook';
 import { clearDetail, fetchServiceBySlug } from '../model/slice';
 import styles from './serviceDetail.module.scss';
@@ -8,6 +8,7 @@ import styles from './serviceDetail.module.scss';
 const ServiceDetailPage: React.FC = () => {
   const { slug = '' } = useParams();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { detail, loadingDetail, errorDetail } = useAppSelector((s) => s.services);
 
   useEffect(() => {
@@ -25,16 +26,23 @@ const ServiceDetailPage: React.FC = () => {
 
   const priceNumber = Number(detail.price);
 
+  const handleBackClick = () => {
+    // гарантируем, что список будет пытаться восстановить скролл
+    if (!sessionStorage.getItem('services_restore')) {
+      sessionStorage.setItem('services_restore', '1');
+    }
+    navigate('/services');
+  };
+
   return (
     <div className={styles.wrap}>
       <div className={styles.card}>
         <div className={styles.imageWrap}>
           {detail.image_url ? (
             <img src={detail.image_url} alt={detail.title} className={styles.image} />
-          ) : (
-            <div className={styles.imagePlaceholder} />
-          )}
+          ) : null}
         </div>
+
         <div className={styles.content}>
           <h1 className={styles.title}>{detail.title}</h1>
           <div className={styles.price}>
@@ -46,6 +54,19 @@ const ServiceDetailPage: React.FC = () => {
             })}
           </div>
           <div className={styles.desc}>{detail.description}</div>
+
+          {/* Иконка "назад" справа снизу после описания */}
+          <div className={styles.backRow}>
+            <button
+              type="button"
+              className={styles.backBtn}
+              onClick={handleBackClick}
+              aria-label="Назад к услугам"
+              title="Назад к услугам"
+            >
+              <img src="/media/icons/back.svg" alt="" className={styles.backIcon} />
+            </button>
+          </div>
         </div>
       </div>
     </div>
